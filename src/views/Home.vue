@@ -1,18 +1,43 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <f-header :titleList="titleList"></f-header>
+
+  <router-view></router-view>
+
+  <f-footer></f-footer>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { reactive, toRefs } from '@vue/reactivity'
+// 页头
+import fHeader from '../components/homePage/f-header'
+// 页脚
+import fFooter from '../components/homePage/f-footer/f-footer'
 
 export default {
-  name: 'Home',
+  setup () {
+    const state = reactive ({
+      // 标题数组
+      titleList: [
+        {
+          title: '火车票'
+        },
+        {
+          title: '汽车票'
+        }
+      ]
+    })
+
+    return {
+      ...toRefs(state)
+    }
+  },
   components: {
-    HelloWorld
+    fHeader,
+    fFooter
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -1,0 +1,12 @@
+$choose-font: 20px;
+$not-choose-color: #d2d4d9;
+
+// 选择器共通样式
+.choose-sec {
+  font-size: $choose-font;
+  cursor: pointer;
+}
+
+.not-choose {
+  color: $not-choose-color;
+}

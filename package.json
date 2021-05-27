@@ -1,5 +1,5 @@
 {
-  "name": "feizhu",
+  "name": "fezhu",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "mockjs": "^1.1.0",
     "normalize.css": "^8.0.1",
     "qs": "^6.5.2",
     "register-service-worker": "^1.7.1",
