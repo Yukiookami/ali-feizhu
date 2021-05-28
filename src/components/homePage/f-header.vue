@@ -18,11 +18,27 @@
 import { reactive, toRefs, ref } from '@vue/reactivity'
 import { gotoPage } from '../../assets/js/common'
 import { onBeforeUpdate, onMounted } from '@vue/runtime-core'
+import { computed, getCurrentInstance } from '@vue/runtime-core'
 
 export default {
   props: ["titleList"],
   setup () {
     const state = reactive({
+      /**
+       * 获取当前页面路由
+       * 
+       * @returns {String}
+       */
+      nowIndex: computed(() => {
+        const { ctx }= getCurrentInstance()
+        const pageName = ctx.$router.currentRoute.value.path.substr(1)
+
+        if (pageName !== 'trainTicket' && pageName !== 'busTicket' || pageName === 'trainTicket') {
+          return 0
+        } else {
+          return 1
+        }
+      }),
       // 当前目录
       seletFlag: 0,
       /**
@@ -63,11 +79,12 @@ export default {
     })
 
     onBeforeUpdate (() => {
-        titleSpanArr = []
+      titleSpanArr = []
     })
 
     onMounted(() => {
-      state.setLeft(0)
+      state.seletFlag = state.nowIndex 
+      state.setLeft(state.seletFlag)
     })
 
     return {

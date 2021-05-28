@@ -1,20 +1,32 @@
 <template>
-  <section class="f-sel-pan-main">
-    <nav v-if="navList"></nav>
+  <section class="f-sel-pan-main" :class="{'go-bottom': navList}">
+    <nav class="nav-list-sec" v-if="navList">
+      <span v-for="(item, index) in navList" :key="`navList${index}`" :ref="titleSpan"
+      :style="{'--index': navList.length}" :class="{'selected': index === selectedNum}"
+      @click="changeSelectedNum(index)">
+        {{item.title}}
+        <f-hot v-if="index === 1" :hotTag="'Hot'"></f-hot>
+        <f-hot v-else-if="index === 2" :hotTag="'New'"></f-hot>
+      </span>
+
+      <div class="select-box" :style="{'--left': left}">
+        <span class="select-box-line"></span>
+      </div>
+    </nav>
 
     <div class="f-sel-choose-sec">
       <!-- 0城市，1景点，2港口 -->
-      <f-choose-city :city="depCity" v-if="!travelMode"></f-choose-city>
-      <f-choose-attr v-else-if="travelMode === 1"></f-choose-attr>
-      <f-choose-port v-else></f-choose-port>
+      <f-choose-city :city="depCity" v-if="!nowTravelMode"></f-choose-city>
+      <f-choose-attr :arrt="depArrt" v-else-if="nowTravelMode === 1"></f-choose-attr>
+      <f-choose-port :port="depPort" v-else></f-choose-port>
 
       <div class="f-sel-ring">
-        <img :src="icon" alt="">
+        <img :src="nowIcon" alt="">
       </div>
 
-      <f-choose-city :city="targetCity" v-if="!travelMode"></f-choose-city>
-      <f-choose-attr v-else-if="travelMode === 1"></f-choose-attr>
-      <f-choose-port v-else></f-choose-port>
+      <f-choose-city :city="targetCity" v-if="!nowTravelMode"></f-choose-city>
+      <f-choose-attr :arrt="targetArrt" v-else-if="nowTravelMode === 1"></f-choose-attr>
+      <f-choose-port :port="targetPort" v-else></f-choose-port>
     </div>
 
     <f-choose-time></f-choose-time>
@@ -38,8 +50,9 @@ import fChooseCity from '../common/f-choose-city'
 import fChoosePort from '../common/f-choose-port'
 import fChooseAttr from '../common/f-choose-attr'
 import fConditionButton from './f-condition-button'
-import { reactive, toRefs } from '@vue/reactivity'
-import { computed } from '@vue/runtime-core'
+import fHot from '../common/f-hot'
+import { reactive, ref, toRefs } from '@vue/reactivity'
+import { computed, onBeforeUpdate, onMounted } from '@vue/runtime-core'
 import store from '@/store'
 
 export default {
@@ -48,6 +61,45 @@ export default {
   emits: ['changeCheck'],
   setup (props, cxt) {
     const state = reactive({
+      // 当前选中目录
+      selectedNum: 0,
+      /**
+       * 更改目录，点击触发
+       * @event
+       * 
+       * @param {number} index
+       */
+      changeSelectedNum: index => {
+        state.selectedNum = index
+        state.setLeft(index)
+      },
+      // 伪元素偏移量
+      left: "0px",
+      /**
+       * 设置伪元素偏移
+       * 
+       * @param {number} index 
+       */
+      setLeft: index => {
+        state.left = `${titleSpanArr[index].offsetLeft}px`
+      },
+      // 设置icon
+      nowIcon: computed(() => {
+
+        if (props.navList) {
+          return props.navList[state.selectedNum].icon
+        } else {
+          return props.icon
+        }
+      }),
+      // 设置旅行方式
+      nowTravelMode: computed(() => {
+        if (props.navList) {
+          return +props.navList[state.selectedNum].travelMode
+        } else {
+          return +props.travelMode
+        }
+      }),
       // button文字
       buttonText: '开始搜索',
       // 改变条件状态
@@ -104,8 +156,30 @@ export default {
       })
     })
 
+
+      let titleSpanArr = []
+      // 获得锚点元素
+  
+      const titleSpan = ref((e) => {
+          if (e) {
+            titleSpanArr.push(e)
+          }
+      })
+
+      onBeforeUpdate (() => {
+        titleSpanArr = []
+      })
+
+      onMounted(() => {
+        if (props.navList){
+          state.setLeft(state.selectedNum)
+        }
+      })
+    
+
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      titleSpan
     }
   },
   components: {
@@ -113,7 +187,8 @@ export default {
     fChooseCity,
     fChoosePort,
     fChooseAttr,
-    fConditionButton
+    fConditionButton,
+    fHot
   }
 }
 </script>
@@ -122,10 +197,14 @@ export default {
 @import '../../assets/css/variable.scss';
 $ring-w: 32px;
 $button-h: 42px;
+$navIndex: var(--index);
+$border-r: 10px;
+$left: var(--left); 
 
 .f-sel-pan-main {
   overflow: hidden;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -133,8 +212,87 @@ $button-h: 42px;
   margin: 4vw;
   padding: 20px 6vw 5px;
   background-color: $wite-color;
-  border-radius: 10px;
+  border-radius: $border-r;
   box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+
+  .nav-list-sec {
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    top: 0;
+    background-color: $g-nav-color;
+    color: $bl-d-color;
+    font-size: 14px;
+    height: 39px;
+    width: 100%;
+
+    span {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(100% / 3);
+      height: 100%;
+      z-index: 1;
+      transition: all .3s;
+    }
+
+    .selected {
+      font-weight: 800;
+    }
+
+    .select-box {
+      position: absolute;
+      top: 0;
+      left: $left;
+      height: 100%;
+      width: calc(100% / 3);
+      background-color: $wite-color;
+      border-top-left-radius: $border-r;
+      border-top-right-radius: $border-r;
+      transition: all .3s;
+
+      $b-w: 11px;
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: -$b-w;
+        width: $b-w;
+        height: $b-w;
+        background-image: url('../../assets/img/homePage/nav-list-back.png');
+        background-size: 100%;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: -$b-w;
+        width: $b-w;
+        height: $b-w;
+        transform: rotate(-90deg);
+        background-image: url('../../assets/img/homePage/nav-list-back.png');
+        background-size: 100%;
+      }
+
+      .select-box-line {
+        position: absolute;
+        display: block;
+        left: 50%;
+        width: 20px;
+        height: 3px;
+        border-radius: 10px;
+        background-color: $yel-color;
+        transform: translateX(-50%);
+        bottom: 0px;
+      }
+    }
+  }
 
   .f-sel-choose-sec {
     display: flex;
@@ -185,5 +343,9 @@ $button-h: 42px;
       width: 100%;
     }
   }
+}
+
+.go-bottom {
+  padding-top: 50px;
 }
 </style>
