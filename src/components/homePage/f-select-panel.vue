@@ -58,7 +58,7 @@ import store from '@/store'
 export default {
   // nav数组（可选）,条件限制（可选），图标，出行方式
   props: ['navList', 'conditonList', 'icon', 'travelMode'],
-  emits: ['changeCheck'],
+  emits: ['changeCheck', 'setSelectedNum'],
   setup (props, cxt) {
     const state = reactive({
       // 当前选中目录
@@ -70,6 +70,7 @@ export default {
        * @param {number} index
        */
       changeSelectedNum: index => {
+        cxt.emit('setSelectedNum', index)
         state.selectedNum = index
         state.setLeft(index)
       },

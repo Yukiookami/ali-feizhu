@@ -1,8 +1,8 @@
 <template>
   <div>
-    <f-select-panel :navList="selPanel.navList"></f-select-panel>
+    <f-select-panel :navList="selPanel.navList" @setSelectedNum="setSelectedNum"></f-select-panel>
 
-    <div class="f-arrt-sec">
+    <div class="f-arrt-sec" v-show="nowIndex === 1">
       <span class="f-arrt-sec-title">{{arrtSecText}}</span>
       <div class="f-arrt-item-box">
         <f-rec-places v-for="(item, index) in arrtArr" :key="`rec${index}`"
@@ -46,6 +46,17 @@ export default {
             travelMode: 2
           }
         ]
+      },
+      // 当前面板
+      nowIndex: 0,
+      /**
+       * 获得当前面板index
+       * 
+       * @param {number} index
+       */
+      setSelectedNum: index => {
+        state.nowIndex = index
+        console.log(index)
       },
       // 景点信息
       arrtSecText: '景点推荐',
