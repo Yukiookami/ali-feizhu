@@ -56,7 +56,6 @@ export default {
        */
       setSelectedNum: index => {
         state.nowIndex = index
-        console.log(index)
       },
       // 景点信息
       arrtSecText: '景点推荐',
