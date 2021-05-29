@@ -18,9 +18,12 @@ import fAdvBox from '../components/common/f-adv-box'
 import fSelectPanel from '../components/homePage/f-select-panel'
 import fAdvButton from '../components/homePage/f-adv-button'
 import fRecPlaces from '../components/homePage/f-rec-places'
+import { getCurrentInstance, onMounted } from '@vue/runtime-core'
 
 export default {
   setup () {
+    const { ctx } = getCurrentInstance()
+
     const state = reactive({
       // 广告信息
       adv: {
@@ -59,28 +62,17 @@ export default {
       },
       // 景点信息
       arrtSecText: '景点推荐',
-      arrtArr: [
-        {
-          title: '西栅景区',
-          content: '欣赏楼台戏剧,河sssssssss',
-          cover: require('../assets/img/rec-img/cover-1.jpeg')
-        },
-        {
-          title: '乌镇西栅景区',
-          content: '当地十分有名的sssssss',
-          cover: require('../assets/img/rec-img/cover-2.jpeg')
-        },
-        {
-          title: '上海南站',
-          content: '',
-          cover: require('../assets/img/rec-img/cover-3.jpeg')
-        },
-        {
-          title: '东栅景区',
-          content: '寺庙',
-          cover: require('../assets/img/rec-img/cover-4.jpeg')
-        }
-      ]
+      // 获得景点List
+      getArrtList: () => {
+        ctx.$http.get('/mock/news').then(res => {
+          state.arrtArr = res.data
+        })
+      },
+      arrtArr: []
+    })
+
+    onMounted(() => {
+      state.getArrtList()
     })
   
     return {

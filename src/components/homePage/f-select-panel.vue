@@ -198,7 +198,7 @@ export default {
 @import '../../assets/css/variable.scss';
 $ring-w: 32px;
 $button-h: 42px;
-$navIndex: var(--index);
+// $navIndex: var(--index);
 $border-r: 10px;
 $left: var(--left); 
 
@@ -233,7 +233,8 @@ $left: var(--left);
       display: flex;
       justify-content: center;
       align-items: center;
-      width: calc(100% / 3);
+      // width: (100% / $navIndex);
+      width: calc(100% / var(--index));
       height: 100%;
       z-index: 1;
       transition: all .3s;

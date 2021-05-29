@@ -6,6 +6,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    redirect: '/trainTicket',
     mate: {
       title: '火车票汽车票'
     },

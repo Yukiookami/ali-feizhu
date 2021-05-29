@@ -13,7 +13,6 @@ export default {
   // 封面，标题，简介
   props: ['cover', 'title', 'content'],
   setup () {
-    
 
     return {}
   }
@@ -28,6 +27,7 @@ export default {
   color: #333;
   width: 96px;
   margin: 10px 10px 10px 0;
+  font-weight: 400;
 
   .img-box {
     overflow: hidden;
@@ -49,6 +49,7 @@ export default {
     overflow: hidden; 
     font-size: 12px;
     display: block;
+    font-weight: 400;
     height: 1rem;
     line-height: 1rem;
     width: 100%;

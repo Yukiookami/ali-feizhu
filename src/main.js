@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 // axios
-import axios from './assets/js/axios'
+import axios from 'axios'
 // css resets
 import 'normalize.css'
 import './registerServiceWorker'

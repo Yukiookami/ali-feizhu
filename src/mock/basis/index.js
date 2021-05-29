@@ -1,27 +1,32 @@
-/**
- * Mock配置文件
- **/
-// 首先引入Mock
+// mock.js
+
+// 引入mockjs
 const Mock = require('mockjs')
 
-// 设置拦截ajax请求的相应时间
-Mock.setup({
-    timeout: '200-600'
-})
-
-let configArray = []
-
-// 使用webpack的require.context()遍历所有Mock文件
-const files = require.context('.', true, /\.js$/)
-files.keys().forEach((key) => {
-    if (key === './index.js') return
-    configArray = configArray.concat(files(key).default)
-})
-
-// 注册所有的Mock服务
-configArray.forEach((item) => {
-    for (let [path, target] of Object.entries(item)) {
-        let protocol = path.split('|')
-        Mock.mock(new RegExp('^' + protocol[1]), protocol[0], target)
+// 返回景点数组
+const produceNewsData = function () {
+  return [
+    {
+        title: '西栅景区',
+        content: '欣赏楼台戏剧,河sssssssss',
+        cover: require('../../assets/img/rec-img/cover-1.jpeg')
+    },
+    {
+        title: '乌镇西栅景区',
+        content: '当地十分有名的sssssss',
+        cover: require('../../assets/img/rec-img/cover-2.jpeg')
+    },
+    {
+        title: '上海南站',
+        content: '',
+        cover: require('../../assets/img/rec-img/cover-3.jpeg')
+    },
+    {
+        title: '东栅景区',
+        content: '寺庙',
+        cover: require('../../assets/img/rec-img/cover-4.jpeg')
     }
-})
+  ]
+}
+// 请求该url，就可以返回newsList
+Mock.mock('/mock/news', produceNewsData) // 后面讲这个api的使用细节
