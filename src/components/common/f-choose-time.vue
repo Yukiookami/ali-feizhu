@@ -5,7 +5,7 @@
   </div>
 
   <transition name="panel">
-    <section ref="panel" class="f-c-time-panel">
+    <section ref="panel" class="f-c-time-panel" v-show="showPanel">
       <header class="f-c-time-heaer">
         <div class="text-box">
           <span @click="isShowPanel" class="cancel-button">{{cancelText}}</span>
@@ -112,29 +112,45 @@ export default {
         state.getMonCal(lastYear, lastMon, 0, false)
 
         if (nextDayObj.nextMon) {
+          let thisDay = state.calendarArr[index].calList[state.calendarArr[1].calList.findIndex(ele => ele)]
           state.chooseDayDef(1)
+          state.nowTime = `${nextMon}月${1}日` 
+          state.dayAfter = state.getWeekDay(thisDay.year, thisDay.mon, thisDay.day)
         } else {
-          state.chooseDayDef(0)
+          state.chooseDayDef(0, nextDayObj.nextDay)
+          state.nowTime = `${nowMon}月${nowDays + 1}日` 
+          state.dayAfter = state.getWeekDay(nowYear, nowMon, nowDays + 1)
         }
-
-        // console.log(monTitleSpanArr)
       },
       /**
        * 选择日期(默认)
        * 
        * @param {number} index
+       * @param {number} indexDay
        */
-      chooseDayDef: index => {
-        let chooseDay = state.calendarArr[index].calList.find(ele => {
-          return ele
-        })
+      chooseDayDef: (index, indexDay) => {
+        if (indexDay) {
+          let chooseDay = state.calendarArr[index].calList[indexDay]
 
-        chooseDay.selectDay = true
-        chooseDay.holiday = '出发'
+          chooseDay.selectDay = true
+          chooseDay.holiday = '出发'
+            
+          state.isNext = {
+            index: index,
+            indexDay: indexDay
+          }
+        } else {
+          let chooseDay = state.calendarArr[index].calList.find(ele => {
+            return ele
+          })
 
-        state.isNext = {
-          index: index,
-          indexDay: state.calendarArr[index].calList.findIndex(ele => ele)
+          state.isNext = {
+            index: index,
+            indexDay: chooseDay
+          }
+
+          chooseDay.selectDay = true
+          chooseDay.holiday = '出发'
         }
 
         if (index) {
@@ -180,6 +196,7 @@ export default {
             calList.push({
               day: cont,
               mon: nowMon,
+              year: nowYear,
               selectDay: selectDay,
               holiday: holiday,
               isPass: isPass
@@ -200,7 +217,7 @@ export default {
           }
         } else {
           return {
-            nextDay: nowDay + 1,
+            nextDay: nowDay + 2,
             nextMon: false
           }
         }
@@ -252,16 +269,16 @@ export default {
        * @event
        */
       listenPageTop: () => {
+        // console.log(monTitleSpanArr)
         Array.prototype.forEach.call(monTitleSpanArr, (ele, index) => {
           // let top = ele.offsetTop
           let scorllTop = Math.floor(ele.getBoundingClientRect().top)
+          // if (index !==0) {
+          //   console.log(index)
+          // }
           
           if (scorllTop <= 95 && scorllTop > -200) {
             state.isFixedTitle = index
-          }
-
-          if (index === 0) {
-            console.log(state.isFixedTitle === index)
           }
         })
       },
@@ -288,8 +305,23 @@ export default {
           }
 
           state.nowTime = `${thisDay.mon}月${thisDay.day}日` 
+          state.dayAfter = state.getWeekDay(thisDay.year, thisDay.mon, thisDay.day)
           state.isShowPanel()
         }
+      },
+      /**
+       * 获得星期数
+       * 
+       * @param {number} year
+       * @param {number} mon
+       * @param {number} day
+       */
+      getWeekDay: (year, mon, day) => {
+        const nowDate = new Date(`${year}, ${mon}, ${day}`)
+        let week = nowDate.getDay()
+        let dayList = ['周天', '周一', '周二', '周三', '周四', '周五', '周六']
+        
+        return dayList[week]
       },
       /**
        * 是否显示面板
@@ -303,11 +335,14 @@ export default {
     let panel = ref(null)
     
     const monTitleSpan = ref(e => {
-      if (e) {
-        monTitleSpanArr.push(e)
+      if (monTitleSpanArr.length < 3) {
+        if (e) {
+          monTitleSpanArr.push(e)
+        }
       }
     })
 
+    // 为什么不触发
     onBeforeUpdate(() => {
       monTitleSpanArr = []
     })
@@ -381,11 +416,10 @@ $after-h: $after-w * 2;
   width: 100vw;
   background-color: $wite-color;
   z-index: 99;
-  padding-top: 120px;
+  padding-top: 140px;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
   backface-visibility: hidden;
-  transition: all .4s;
 
   // 头部
   .f-c-time-heaer {
