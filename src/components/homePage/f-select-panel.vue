@@ -203,7 +203,7 @@ $border-r: 10px;
 $left: var(--left); 
 
 .f-sel-pan-main {
-  overflow: hidden;
+  // overflow: hidden;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -217,12 +217,15 @@ $left: var(--left);
   box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 
   .nav-list-sec {
+    overflow: hidden;
     position: absolute;
     display: flex;
     justify-content: space-around;
     align-items: center;
     top: 0;
     background-color: $g-nav-color;
+    border-top-left-radius: $border-r;
+    border-top-right-radius: $border-r;
     color: $bl-d-color;
     font-size: 14px;
     height: 39px;

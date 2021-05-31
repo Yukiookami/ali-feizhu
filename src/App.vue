@@ -22,6 +22,10 @@ export default {
 
 <style lang="scss">
 @import './assets/css/variable.scss';
+*::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+}
 
 body {
   font-size: $font-size-main;
