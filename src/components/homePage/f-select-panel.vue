@@ -16,17 +16,23 @@
 
     <div class="f-sel-choose-sec">
       <!-- 0城市，1景点，2港口 -->
-      <f-choose-city :city="depCity" v-if="!nowTravelMode"></f-choose-city>
-      <f-choose-attr :arrt="depArrt" v-else-if="nowTravelMode === 1"></f-choose-attr>
-      <f-choose-port :port="depPort" v-else></f-choose-port>
+      <f-choose-city :city="depCity" saveValue="setDepCity"
+      v-if="!nowTravelMode"></f-choose-city>
+      <f-choose-attr :arrt="depArrt" saveValue="setDepArrt"
+      v-else-if="nowTravelMode === 1"></f-choose-attr>
+      <f-choose-port :port="depPort" saveValue="setDepPort"
+      v-else></f-choose-port>
 
       <div class="f-sel-ring">
         <img :src="nowIcon" alt="">
       </div>
 
-      <f-choose-city :city="targetCity" v-if="!nowTravelMode"></f-choose-city>
-      <f-choose-attr :arrt="targetArrt" v-else-if="nowTravelMode === 1"></f-choose-attr>
-      <f-choose-port :port="targetPort" v-else></f-choose-port>
+      <f-choose-city :city="targetCity" saveValue="setTargetCity"
+      v-if="!nowTravelMode"></f-choose-city>
+      <f-choose-attr :arrt="targetCityAttr" saveValue="setTargetArrt"
+      v-else-if="nowTravelMode === 1"></f-choose-attr>
+      <f-choose-port :port="targetCityPort" saveValue="setTargetPort"
+      v-else></f-choose-port>
     </div>
 
     <f-choose-time></f-choose-time>

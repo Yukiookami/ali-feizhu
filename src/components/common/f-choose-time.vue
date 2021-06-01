@@ -121,6 +121,12 @@ export default {
           state.nowTime = `${nowMon}月${nowDays + 1}日` 
           state.dayAfter = state.getWeekDay(nowYear, nowMon, nowDays + 1)
         }
+
+        if (store.state.time) {
+          state.getTimeStore()
+        } else {
+          state.setTimeStore(state.nowTime, state.dayAfter)
+        }
       },
       /**
        * 选择日期(默认)
@@ -307,6 +313,8 @@ export default {
           state.nowTime = `${thisDay.mon}月${thisDay.day}日` 
           state.dayAfter = state.getWeekDay(thisDay.year, thisDay.mon, thisDay.day)
           state.isShowPanel()
+
+          state.setTimeStore(state.nowTime, state.dayAfter)
         }
       },
       /**
@@ -322,6 +330,27 @@ export default {
         let dayList = ['周天', '周一', '周二', '周三', '周四', '周五', '周六']
         
         return dayList[week]
+      },
+      /**
+       * 存储时间到VueX
+       * 
+       * @param {string} time
+       * @param {string} goTime 
+       */
+      setTimeStore: (time, goTime) => {
+        store.commit("setTime", {
+          time: time,
+          goTime: goTime
+        })
+      },
+      /**
+       * 读取vueX里的时间
+       */
+      getTimeStore: () => {
+        let time = store.state.time
+
+        state.nowTime = time.time
+        state.dayAfter = time.goTime
       },
       /**
        * 是否显示面板

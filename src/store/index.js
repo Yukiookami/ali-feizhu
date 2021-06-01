@@ -31,27 +31,27 @@ export default createStore({
     },
     // 设置出发地(城市)
     setDepCity (state, dep) {
-      state.dep = dep
+      state.depCity = dep
     },
     // 设置到达地(城市)
     setTargetCity (state, target) {
-      state.target = target
+      state.targetCity = target
     },
     // 设置出发地(景点)
     setDepArrt (state, dep) {
-      state.dep = dep
+      state.depCityAttr = dep
     },
     // 设置到达地(景点)
     setTargetArrt (state, target) {
-      state.target = target
+      state.targetCityAttr = target
     },
     // 设置出发地(港口)
     setDepPort (state, dep) {
-      state.dep = dep
+      state.depCityPort = dep
     },
     // 设置到达地(港口)
     setTargetPort (state, target) {
-      state.target = target
+      state.targetCityPort = target
     },
     // 设置出发时间
     setTime (state, time) {

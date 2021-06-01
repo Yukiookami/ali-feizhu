@@ -28,5 +28,76 @@ const produceNewsData = function () {
     }
   ]
 }
-// 请求该url，就可以返回newsList
-Mock.mock('/mock/news', produceNewsData) // 后面讲这个api的使用细节
+
+// 返回城市数组
+const getCityList = function () {
+  return [
+    {
+      city: '北京',
+      group: 'B'
+    },
+    {
+      city: '成都',
+      group: 'C'
+    },
+    {
+      city: '重庆',
+      group: 'C'
+    },
+    {
+      city: '长沙',
+      group: 'C'
+    },
+    {
+      city: '长春',
+      group: 'C'
+    },
+    {
+      city: '大连',
+      group: 'D'
+    },
+    {
+      city: '福州',
+      group: 'F'
+    },
+    {
+      city: '广州',
+      group: 'G'
+    },
+    {
+      city: '哈尔滨',
+      group: 'H'
+    },
+    {
+      city: '合肥',
+      group: 'H'
+    },
+    {
+      city: '海口',
+      group: 'H'
+    },
+    {
+      city: '广州',
+      group: 'H'
+    },
+    {
+      city: '上海',
+      group: 'S'
+    },
+    {
+      city: '沈阳',
+      group: 'S'
+    },
+    {
+      city: '深圳',
+      group: 'S'
+    },
+    {
+      city: '苏州',
+      group: 'S'
+    }
+  ]
+}
+
+Mock.mock('/mock/news', produceNewsData)
+Mock.mock('/mock/cityList', getCityList)
