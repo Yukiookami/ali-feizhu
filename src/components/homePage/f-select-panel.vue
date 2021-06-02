@@ -29,9 +29,9 @@
 
       <f-choose-city :city="targetCity" saveValue="setTargetCity"
       v-if="!nowTravelMode"></f-choose-city>
-      <f-choose-attr :arrt="targetCityAttr" saveValue="setTargetArrt"
+      <f-choose-attr :arrt="targetArrt" saveValue="setTargetArrt"
       v-else-if="nowTravelMode === 1"></f-choose-attr>
-      <f-choose-port :port="targetCityPort" saveValue="setTargetPort"
+      <f-choose-port :port="targetPort" saveValue="setTargetPort"
       v-else></f-choose-port>
     </div>
 
@@ -42,7 +42,7 @@
       :key="`cond${index}`" :condition="ele.cond" :checked="ele.checked"></f-condition-button>
     </div>
 
-    <button class="search-button">{{buttonText}}</button>
+    <button @click="seachTick(travelMode)" class="search-button">{{buttonText}}</button>
 
     <div class="flypig-logo">
       <img src="../../assets/img/pageCover/feizhu-logo.png" alt="">
@@ -58,14 +58,16 @@ import fChooseAttr from '../common/f-choose-attr'
 import fConditionButton from './f-condition-button'
 import fHot from '../common/f-hot'
 import { reactive, ref, toRefs } from '@vue/reactivity'
-import { computed, onBeforeUpdate, onMounted } from '@vue/runtime-core'
+import { computed, getCurrentInstance, onBeforeUpdate, onMounted } from '@vue/runtime-core'
 import store from '@/store'
 
 export default {
   // nav数组（可选）,条件限制（可选），图标，出行方式
   props: ['navList', 'conditonList', 'icon', 'travelMode'],
   emits: ['changeCheck', 'setSelectedNum'],
-  setup (props, cxt) {
+  setup (props, content) {
+    const { ctx } = getCurrentInstance()
+
     const state = reactive({
       // 当前选中目录
       selectedNum: 0,
@@ -76,7 +78,7 @@ export default {
        * @param {number} index
        */
       changeSelectedNum: index => {
-        cxt.emit('setSelectedNum', index)
+        content.emit('setSelectedNum', index)
         state.selectedNum = index
         state.setLeft(index)
       },
@@ -111,7 +113,7 @@ export default {
       buttonText: '开始搜索',
       // 改变条件状态
       changeCheck: index => {
-        cxt.emit('changeCheck', index)
+        content.emit('changeCheck', index)
       },
       // 出发（城市）
       depCity: computed(() => {
@@ -160,30 +162,67 @@ export default {
         } 
 
         return '选择到达'
-      })
+      }),
+      /**
+       * 搜索票,点击触发
+       * 
+       * @param {number} travelMode
+       */
+      seachTick: travelMode => {
+        let sto = store.state
+        let dep = ''
+        let tar = ''
+        let time = ''
+
+        time = store.state.time
+
+        if (!travelMode) {
+          dep = sto.depCity
+          tar = sto.targetCity
+        } else if (travelMode === 1) {
+          dep = sto.depArrt
+          tar = sto.targetArrt
+        } else {
+          dep = sto.depPort
+          tar = sto.targetPort
+        }
+
+        let searchJ = {
+          dep: dep,
+          tar: tar,
+          time: time,
+          travelMode: travelMode
+        }
+
+        if (dep && tar) {
+          ctx.$http.post('/mock/getTick', searchJ).then(res => {
+            console.log(res)
+          })
+        } else {
+          console.log('信息不完善')
+        }
+      }
     })
 
+    let titleSpanArr = []
+    // 获得锚点元素
 
-      let titleSpanArr = []
-      // 获得锚点元素
-  
-      const titleSpan = ref((e) => {
-          if (e) {
-            titleSpanArr.push(e)
-          }
-      })
-
-      onBeforeUpdate (() => {
-        titleSpanArr = []
-      })
-
-      onMounted(() => {
-        if (props.navList){
-          state.setLeft(state.selectedNum)
+    const titleSpan = ref((e) => {
+        if (e) {
+          titleSpanArr.push(e)
         }
-      })
-    
+    })
 
+    onBeforeUpdate (() => {
+      titleSpanArr = []
+    })
+
+    onMounted(() => {
+      if (props.navList){
+        state.setLeft(state.selectedNum)
+      }
+    })
+    
     return {
       ...toRefs(state),
       titleSpan

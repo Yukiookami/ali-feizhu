@@ -9,13 +9,13 @@ export default createStore({
     // 到达地（城市）
     targetCity: '',
     // 出发地（景点）
-    depCityAttr: '',
+    depArrt: '',
     // 到达地（景点）
-    targetCityAttr: '',
+    targetArrt: '',
     // 出发地（港口）
-    depCityPort: '',
+    depPort: '',
     // 到达地（港口）
-    targetCityPort: '',
+    targetPort: '',
     // 出发时间
     time: ''
   },
@@ -39,19 +39,19 @@ export default createStore({
     },
     // 设置出发地(景点)
     setDepArrt (state, dep) {
-      state.depCityAttr = dep
+      state.depArrt = dep
     },
     // 设置到达地(景点)
     setTargetArrt (state, target) {
-      state.targetCityAttr = target
+      state.targetArrt = target
     },
     // 设置出发地(港口)
     setDepPort (state, dep) {
-      state.depCityPort = dep
+      state.depPort = dep
     },
     // 设置到达地(港口)
     setTargetPort (state, target) {
-      state.targetCityPort = target
+      state.targetPort = target
     },
     // 设置出发时间
     setTime (state, time) {

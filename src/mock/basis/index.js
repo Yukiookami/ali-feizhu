@@ -99,5 +99,72 @@ const getCityList = function () {
   ]
 }
 
+// 返回港口数组
+const getPort = function () {
+  return [
+    {
+      navTitle: '广西',
+      portList: [
+        {
+          protLineDep: '北海市',
+          portLineTar: '海口市',
+          group: "B"
+        },
+        {
+          protLineDep: '北海市',
+          portLineTar: '涠岛市',
+          group: "B"
+        },
+        {
+          protLineDep: '涠岛市',
+          portLineTar: '北海市',
+          group: "W"
+        }
+      ]
+    },
+    {
+      navTitle: '粤港澳',
+      portList: [
+        {
+          protLineDep: '深圳市',
+          portLineTar: '深圳湾上游',
+          group: "S"
+        },
+        {
+          protLineDep: '深圳市',
+          portLineTar: '珠海市',
+          group: "S"
+        },
+        {
+          protLineDep: '深圳市',
+          portLineTar: '中山市',
+          group: "S"
+        },
+        {
+          protLineDep: '中山市',
+          portLineTar: '深圳市',
+          group: "Z"
+        },
+        {
+          protLineDep: '珠海市',
+          portLineTar: '深圳市',
+          group: "Z"
+        },
+        {
+          protLineDep: '珠海市',
+          portLineTar: '海上看珠海',
+          group: "Z"
+        }
+      ]
+    }
+  ]
+}
+
+const getTick = req => {
+  return req.body
+}
+
 Mock.mock('/mock/news', produceNewsData)
 Mock.mock('/mock/cityList', getCityList)
+Mock.mock('/mock/portList', getPort)
+Mock.mock('/mock/getTick', getTick)
