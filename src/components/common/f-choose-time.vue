@@ -1,5 +1,12 @@
 <template>
-  <div @click="isShowPanel" class="f-c-time-sec">
+  <div @click="isShowPanel" class="sen-show" v-if="showModel" :class="{'no-color': noColor, 'no-aji': noAji}">
+    <span>{{nowTime}}</span>
+    <span>{{dayAfter}}</span>
+    <i class="line"></i>
+    <i class="karenda"></i>
+  </div>
+
+  <div @click="isShowPanel" class="f-c-time-sec" v-else>
     <span>{{nowTime}}</span>
     <span class="small-text">{{dayAfter}}</span>
   </div>
@@ -44,6 +51,7 @@ import store from '@/store'
 import { reactive, ref, toRefs } from '@vue/reactivity'
 import { nextTick, onBeforeUpdate, onMounted, onUpdated } from '@vue/runtime-core'
 export default {
+  props: ['showModel', 'noColor', 'noAji'],
   setup () {
     const state = reactive({
       // 选择的时间
@@ -111,21 +119,28 @@ export default {
         state.getMonCal(nextYear, nextMon, 0, false)
         state.getMonCal(lastYear, lastMon, 0, false)
 
+        let monIndex = 0
+        let dayIndex = 0 
+
         if (nextDayObj.nextMon) {
           let thisDay = state.calendarArr[index].calList[state.calendarArr[1].calList.findIndex(ele => ele)]
           state.chooseDayDef(1)
           state.nowTime = `${nextMon}月${1}日` 
+          monIndex = nextMon
+          dayIndex = 1
           state.dayAfter = state.getWeekDay(thisDay.year, thisDay.mon, thisDay.day)
         } else {
           state.chooseDayDef(0, nextDayObj.nextDay)
-          state.nowTime = `${nowMon}月${nowDays + 1}日` 
-          state.dayAfter = state.getWeekDay(nowYear, nowMon, nowDays + 1)
+          monIndex = nowMon
+          dayIndex = nowDays + 1
+          state.nowTime = `${nowMon}月${dayIndex}日` 
+          state.dayAfter = state.getWeekDay(nowYear, nowMon, dayIndex)
         }
 
         if (store.state.time) {
           state.getTimeStore()
         } else {
-          state.setTimeStore(state.nowTime, state.dayAfter)
+          state.setTimeStore(state.nowTime, state.dayAfter, monIndex, dayIndex)
         }
       },
       /**
@@ -314,7 +329,7 @@ export default {
           state.dayAfter = state.getWeekDay(thisDay.year, thisDay.mon, thisDay.day)
           state.isShowPanel()
 
-          state.setTimeStore(state.nowTime, state.dayAfter)
+          state.setTimeStore(state.nowTime, state.dayAfter, index, indexDay)
         }
       },
       /**
@@ -336,11 +351,14 @@ export default {
        * 
        * @param {string} time
        * @param {string} goTime 
+       * @param {string} monIndex
+       * @param {string} dayIndex
        */
-      setTimeStore: (time, goTime) => {
+      setTimeStore: (time, goTime, monIndex, dayIndex) => {
         store.commit("setTime", {
           time: time,
-          goTime: goTime
+          goTime: goTime,
+
         })
       },
       /**
@@ -567,6 +585,62 @@ $after-h: $after-w * 2;
       }
     }
   } 
+}
+
+.sen-show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: $yel-color;
+  color: #3D3D3D;
+  font-size: 13px;
+  height: 29px;
+  line-height: 29px;
+  width: 135px;
+
+  span {
+    margin-right: 5px;
+  }
+
+  .line {
+    display: block;
+    height: 23.5px;
+    width: 1px;
+    background-color: rgba(0, 0, 0, .1);
+    margin-right: 5px;
+  }
+
+  .karenda {
+    padding: 7px 9.5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../../assets/img/tickPage/karenda.svg');
+  }
+}
+
+.no-color {
+  background-color: transparent;
+
+  .line {
+    display: none;
+  }
+  
+  .karenda {
+    transform: rotate(90deg);
+    background-image: url('../../assets/img/tickPage/yokoaj.svg');
+  }
+}
+
+.no-aji {
+  width: auto;
+  font-size: 14px;
+  color: #333;
+
+  .karenda {
+    padding: 0;
+    background-image: none;
+  }
 }
 
 // 面板进出动画

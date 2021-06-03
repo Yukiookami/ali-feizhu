@@ -12,7 +12,7 @@ const produceNewsData = function () {
         cover: require('../../assets/img/rec-img/cover-1.jpeg')
     },
     {
-        title: '乌镇西栅景区',
+        title: '乌镇',
         content: '当地十分有名的sssssss',
         cover: require('../../assets/img/rec-img/cover-2.jpeg')
     },
@@ -161,10 +161,181 @@ const getPort = function () {
 }
 
 const getTick = req => {
-  return req.body
+  let body = JSON.parse(req.body)
+
+  if (!body.travelMode) {
+    // 火车
+    return [
+      {
+        id: '1',
+        depTime: '06:39',
+        depCity: '北京',
+        tarTime: '07:48',
+        tarCity: '唐山北',
+        bango: 'D21',
+        allTime: '1时9分',
+        money: '44.5',
+        first: '有票',
+        sen: '有票',
+        tachi: '有票'
+      },
+      {
+        id: '2',
+        depTime: '06:39',
+        depCity: '北京',
+        tarTime: '07:48',
+        tarCity: '唐山北',
+        bango: 'D21',
+        allTime: '1时9分',
+        money: '44.5',
+        first: '有票',
+        sen: '有票',
+        tachi: '有票'
+      },
+      {
+        id: '3',
+        depTime: '06:39',
+        depCity: '北京',
+        tarTime: '07:48',
+        tarCity: '唐山北',
+        bango: 'D21',
+        allTime: '1时9分',
+        money: '44.5',
+        first: '有票',
+        sen: '有票',
+        tachi: '有票'
+      },
+      {
+        id: '4',
+        depTime: '06:39',
+        depCity: '北京',
+        tarTime: '07:48',
+        tarCity: '唐山北',
+        bango: 'D21',
+        allTime: '1时9分',
+        money: '44.5',
+        first: '有票',
+        sen: '有票',
+        tachi: '有票'
+      }
+    ]
+
+  } else if (body.travelMode === 1) {
+    // 汽车
+    return [
+      {
+        id: '1',
+        depTime: '09:30',
+        depCity: '杭州西湖景区',
+        tarTime: '21:00',
+        tarCity: '乌镇',
+        bango: '五座或七座车',
+        tickKazo: '20',
+        money: '99',
+        tag: [
+          {
+            title: '滚动发车'
+          },
+          {
+            title: '过路车'
+          }
+        ]
+      },
+      {
+        id: '2',
+        depTime: '09:30',
+        depCity: '杭州西湖景区',
+        tarTime: '21:00',
+        tarCity: '乌镇',
+        bango: '五座或七座车',
+        tickKazo: '20',
+        money: '99',
+        tag: [
+          {
+            title: '滚动发车'
+          },
+          {
+            title: '过路车'
+          }
+        ]
+      },
+      {
+        id: '3',
+        depTime: '09:30',
+        depCity: '杭州西湖景区',
+        tarTime: '21:00',
+        tarCity: '乌镇',
+        bango: '五座或七座车',
+        tickKazo: '20',
+        money: '99',
+        tag: [
+          {
+            title: '滚动发车'
+          },
+          {
+            title: '过路车'
+          }
+        ]
+      },
+      {
+        id: '4',
+        depTime: '09:30',
+        depCity: '杭州西湖景区',
+        tarTime: '21:00',
+        tarCity: '乌镇',
+        bango: '五座或七座车',
+        tickKazo: '20',
+        money: '99',
+        tag: [
+          {
+            title: '滚动发车'
+          },
+          {
+            title: '过路车'
+          }
+        ]
+      }
+    ]
+
+  } else {
+    // 轮船
+    return {}
+  }
+}
+
+const getTickInfo = req => {
+  let body = JSON.parse(req.body)
+  let id = body.id
+  let nowT = body.nowT
+
+  if (id && !nowT) {
+    return [
+      {
+        name: '硬座',
+        has: '有票',
+        money: '40.5'
+      },
+      {
+        name: '无座',
+        has: '有票',
+        money: '40.5'
+      }
+    ]
+  } else if (nowT === 1) {
+    return [
+      {
+        title: '乌镇',
+        cover: require('../../assets/img/tickPage/cover.jpeg'),
+        money: '99',
+        tickTitle: '单程票',
+        content: '流水线路半小时一班、滚动发车，乘客购票后可以自选班次时间乘车，如时间确定后行程有变可免费改签一次，此'
+      }
+    ]
+  }
 }
 
 Mock.mock('/mock/news', produceNewsData)
 Mock.mock('/mock/cityList', getCityList)
 Mock.mock('/mock/portList', getPort)
 Mock.mock('/mock/getTick', getTick)
+Mock.mock('/mock/getTickInfo', getTickInfo)

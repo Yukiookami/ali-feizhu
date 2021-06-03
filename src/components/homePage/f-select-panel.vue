@@ -47,6 +47,8 @@
     <div class="flypig-logo">
       <img src="../../assets/img/pageCover/feizhu-logo.png" alt="">
     </div>
+
+    <f-massage :msg="msg" :showMidZ="showMidZ"></f-massage>
   </section>
 </template>
 
@@ -57,9 +59,12 @@ import fChoosePort from '../common/f-choose-port'
 import fChooseAttr from '../common/f-choose-attr'
 import fConditionButton from './f-condition-button'
 import fHot from '../common/f-hot'
+import fMassage from '../common/f-massage'
 import { reactive, ref, toRefs } from '@vue/reactivity'
 import { computed, getCurrentInstance, onBeforeUpdate, onMounted } from '@vue/runtime-core'
 import store from '@/store'
+import router from '../../router'
+import Base64 from '../../assets/js/base64'
 
 export default {
   // nav数组（可选）,条件限制（可选），图标，出行方式
@@ -163,12 +168,16 @@ export default {
 
         return '选择到达'
       }),
+      // 提示信息
+      msg: '',
+      // 是否显示
+      showMidZ: false,
       /**
        * 搜索票,点击触发
        * 
-       * @param {number} travelMode
        */
-      seachTick: travelMode => {
+      seachTick: () => {
+        let travelMode = state.nowTravelMode
         let sto = store.state
         let dep = ''
         let tar = ''
@@ -194,12 +203,20 @@ export default {
           travelMode: travelMode
         }
 
-        if (dep && tar) {
-          ctx.$http.post('/mock/getTick', searchJ).then(res => {
-            console.log(res)
+        if (dep && tar && dep !== tar) {
+          router.push({
+            path: `/tickPage`,
+            query: {
+              ticPage: Base64.encode(JSON.stringify(searchJ))
+            }
           })
         } else {
-          console.log('信息不完善')
+          state.msg = '信息不完善'
+          state.showMidZ = true
+
+          setTimeout(() => {
+            state.showMidZ = false
+          }, 800)
         }
       }
     })
@@ -234,7 +251,8 @@ export default {
     fChoosePort,
     fChooseAttr,
     fConditionButton,
-    fHot
+    fHot,
+    fMassage
   }
 }
 </script>
