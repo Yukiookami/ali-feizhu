@@ -14,7 +14,7 @@ const routes = [
       {
         path: '/trainTicket',
         name: 'trainTicket',
-        component: () => import('../views/getTrainTicket.vue')
+        component: () => import('../views/getTrainTicket.vue'),
       },
       {
         path: '/busTicket',
@@ -32,6 +32,19 @@ const routes = [
     path: '/buyTick',
     name: 'buyTick',
     component: () => import('../views/buyTickPage.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login.vue')
+  },
+  {
+    path: '/pay',
+    name: 'pay',
+    component: () => import('../views/payTickPage.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
