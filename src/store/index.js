@@ -17,7 +17,9 @@ export default createStore({
     // 到达地（港口）
     targetPort: '',
     // 出发时间
-    time: ''
+    time: '',
+    // 购票mode
+    tickMode: ''
   },
   mutations: {
     // 添加条件
@@ -56,6 +58,10 @@ export default createStore({
     // 设置出发时间
     setTime (state, time) {
       state.time = time
+    },
+    // 设置购票模式
+    setTickMode (state, tickMode) {
+      state.tickMode = tickMode
     }
   },
   actions: {

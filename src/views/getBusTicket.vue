@@ -36,7 +36,7 @@ export default {
           {
             title: '汽车票',
             icon: require('../assets/img/chooseImg/bus.png'),
-            travelMode: 0
+            travelMode: 1
           },
           {
             title: '旅游专线',

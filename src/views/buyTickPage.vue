@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <a href="https://f.m.taobao.com/wow/z/pcraft/act/wupr?wh_biz=tm&wh_pid=flight%2Ftrain-notice&ttid=201300%40travel_h5_3.1.0&_preProjVer=1.21.0" 
+        <router-link to="/pay" 
         class="bottom-box">
           <div>
             <img src="../assets/img/tickPage/waring.png" alt="">
@@ -37,7 +37,7 @@
           <div class="canle">
             <span>购票退改须知</span>
           </div>
-        </a>
+        </router-link>
       </div>
     </div>
 
@@ -105,9 +105,9 @@
               <span class="senbo">¥</span>{{item.money}}
             </span>
 
-            <a class="lon-button" href="https://login.m.taobao.com/login.htm?tpl_redirect_url=https%3A%2F%2Fh5.m.taobao.com%2Ftrip%2Fbuy-new%2Fconfirm%2Findex.html%3FcollectParams%3D%255B%257B%2522dt%2522%253A%25222021-06-04%2522%252C%2522tt%2522%253A0%252C%2522st%2522%253A1%252C%2522as%2522%253A%2522%25E5%2594%2590%25E5%25B1%25B1%2522%252C%2522ac%2522%253A%2522%25E5%2594%2590%25E5%25B1%25B1%2522%252C%2522tn%2522%253A%2522T39%2522%252C%2522ds%2522%253A%2522%25E5%258C%2597%25E4%25BA%25AC%2522%252C%2522dc%2522%253A%2522%25E5%258C%2597%25E4%25BA%25AC%2522%257D%255D%26itemId%3D588288213246%26quantity%3D1%26buyNow%3Dtrue%26bizType%3Dtrain%26_fli_newpage%3D1%26exParams%3D%257B%2522ExtAttr%2522%253A%257B%2522trackTag%2522%253A%2522bussearch_%2522%257D%252C%2522verticalBuyParam%2522%253A%255B%257B%2522itemId%2522%253A588288213246%252C%2522sellerId%2522%253A3549840132%252C%2522trainNoLong%2522%253A%25222400000T390N%2522%252C%2522quantity%2522%253A1%252C%2522isSkipIcClient%2522%253A%2522true%2522%252C%2522ttid%2522%253A%2522201300%2540travel_h5_3.1.0%2522%252C%2522skuId%2522%253A0%252C%2522otaItemId%2522%253A%2522TRAIN_ITEM_POSITIVE%2523%25E5%258C%2597%25E4%25BA%25AC%2523%25E5%2594%2590%25E5%25B1%25B1%25232021-06-04%2523T39%25231%2522%257D%255D%257D%26ttid%3D201300%2540travel_h5_3.1.0%26_preProjVer%3D1.21.0%26_projVer%3D5.9.0">
+            <router-link class="lon-button" to="/pay">
               立即预定
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -127,9 +127,9 @@
             <span class="senbo">¥</span>{{item.money}}
           </span>
 
-          <a class="buy" href="https://login.m.taobao.com/login.htm?tpl_redirect_url=https%3A%2F%2Fh5.m.taobao.com%2Ftrip%2Fbuy-new%2Fconfirm%2Findex.html%3FcollectParams%3D%255B%257B%2522dt%2522%253A%25222021-06-04%2522%252C%2522tt%2522%253A0%252C%2522st%2522%253A1%252C%2522as%2522%253A%2522%25E5%2594%2590%25E5%25B1%25B1%2522%252C%2522ac%2522%253A%2522%25E5%2594%2590%25E5%25B1%25B1%2522%252C%2522tn%2522%253A%2522T39%2522%252C%2522ds%2522%253A%2522%25E5%258C%2597%25E4%25BA%25AC%2522%252C%2522dc%2522%253A%2522%25E5%258C%2597%25E4%25BA%25AC%2522%257D%255D%26itemId%3D588288213246%26quantity%3D1%26buyNow%3Dtrue%26bizType%3Dtrain%26_fli_newpage%3D1%26exParams%3D%257B%2522ExtAttr%2522%253A%257B%2522trackTag%2522%253A%2522bussearch_%2522%257D%252C%2522verticalBuyParam%2522%253A%255B%257B%2522itemId%2522%253A588288213246%252C%2522sellerId%2522%253A3549840132%252C%2522trainNoLong%2522%253A%25222400000T390N%2522%252C%2522quantity%2522%253A1%252C%2522isSkipIcClient%2522%253A%2522true%2522%252C%2522ttid%2522%253A%2522201300%2540travel_h5_3.1.0%2522%252C%2522skuId%2522%253A0%252C%2522otaItemId%2522%253A%2522TRAIN_ITEM_POSITIVE%2523%25E5%258C%2597%25E4%25BA%25AC%2523%25E5%2594%2590%25E5%25B1%25B1%25232021-06-04%2523T39%25231%2522%257D%255D%257D%26ttid%3D201300%2540travel_h5_3.1.0%26_preProjVer%3D1.21.0%26_projVer%3D5.9.0">
+          <router-link class="buy" to="/pay">
             立即预定
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -141,6 +141,7 @@ import { getCurrentInstance, reactive, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import base64 from '../assets/js/base64'
 import fChooseTime from '../components/common/f-choose-time'
+import store from '@/store'
 
 export default {
   props: [],
@@ -165,11 +166,11 @@ export default {
           nowT: nowT
         }).then(res => {
           state.tickArr = res.data
-          console.log(res.data)
         })
 
         state.nowT = nowT
         state.info = info
+        store.commit('setTickMode', nowT)
       }
     })
 

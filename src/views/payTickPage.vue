@@ -5,12 +5,13 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { computed, reactive, toRefs } from 'vue'
 
 export default {
   setup () {
     const state = reactive({
-      count: 0,
+      // 当前页面模式
+      nowT: computed(() => state.tickMode)
     })
   
     return {
