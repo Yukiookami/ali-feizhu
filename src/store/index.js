@@ -19,7 +19,9 @@ export default createStore({
     // 出发时间
     time: '',
     // 购票mode
-    tickMode: ''
+    tickMode: '',
+    // 票据信息
+    tickInfo: ''
   },
   mutations: {
     // 添加条件
@@ -62,6 +64,10 @@ export default createStore({
     // 设置购票模式
     setTickMode (state, tickMode) {
       state.tickMode = tickMode
+    },
+    // 设置票据信息
+    setTickInfo (state, info) {
+      state.tickInfo = info
     }
   },
   actions: {

@@ -171,6 +171,7 @@ export default {
         state.nowT = nowT
         state.info = info
         store.commit('setTickMode', nowT)
+        store.commit('setTickInfo', info)
       }
     })
 

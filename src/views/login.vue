@@ -11,11 +11,14 @@
     </div>
 
     <button class="login-button" @click="login">登录</button>
+
+    <f-massage :msg="msg" :showMidZ="showMidZ"></f-massage>
   </div>
 </template>
 
 <script>
 import { getCurrentInstance, reactive, toRefs } from 'vue'
+import fMassage from '../components/common/f-massage'
 import router from '../router'
 
 export default {
@@ -35,13 +38,27 @@ export default {
           ctx.$cookie.setCookie("login_cookies", state.username, 60 * 60 * 24)
 
           router.push('/pay')
+        } else {
+          state.msg = '请输入正确用户名密码'
+          state.showMidZ = true
+          state.password = ''
+
+          setTimeout(() => {
+            state.showMidZ = false
+          }, 800)
         }
-      }
+      },
+      // 是否显示
+      showMidZ: false,
+      msg: ''
     })
   
     return {
       ...toRefs(state),
     }
+  },
+  components: {
+    fMassage
   }
 }
 </script>

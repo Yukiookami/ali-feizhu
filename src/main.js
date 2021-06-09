@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
   if(to.meta.requiresAuth) {
     // 判断是否有cookie
     if(VueCookieNext.getCookie("login_cookies")) {
-      if (store.state.tickMode) {
+      if (store.state.tickMode || store.state.tickMode === 0)  {
         next()
       } else {
         next({
