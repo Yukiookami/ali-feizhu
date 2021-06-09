@@ -1,6 +1,6 @@
 <template>
   <div class="pay-page">
-    <f-choose-time showModel="1" noColor="1" noAji="1"></f-choose-time>
+    <f-choose-time showModel="1" noColor="1" noAji="1" v-if="!nowT"></f-choose-time>
 
     <!-- 火车票票头 -->
     <div class="train-sec" v-if="!nowT">
@@ -43,6 +43,18 @@
       </div>
     </div>
 
+    <!-- 汽车票票头 -->
+    <div class="car-sec" v-if="nowT === 1">
+      <div class="time-box">
+        <span class="now-time">{{nowTime}} {{info.depTime}}-{{info.tarTime}}出发</span>
+        <span>滚动发车</span>
+      </div>
+
+      <div>
+        <span>{{info.depCity}} - {{info.tarCity}}</span>
+      </div>
+    </div>
+
     <!-- 添加乘车人 -->
     <div class="add-person">
       <button @click="changeNewShow">添加乘车人</button>
@@ -60,7 +72,7 @@
 
             <div class="z-box">
               <span>{{item.zType}}</span>
-              <span class="z-num">{{item.zNum}}</span>
+              <span class="z-num">{{item.nowzNum}}</span>
             </div>
           </div>
 
@@ -99,7 +111,7 @@
 
               <div class="z-box">
                 <span>{{item.zType}}</span>
-                <span class="z-num">{{item.zNum}}</span>
+                <span class="z-num">{{item.nowzNum}}</span>
               </div>
             </div>
 
@@ -148,6 +160,8 @@ export default {
       nowT: computed(() => store.state.tickMode),
       // 票体信息
       info: computed(() => store.state.tickInfo),
+      // 当前时间
+      nowTime: computed(() => `${store.state.time.time} ${store.state.time.goTime}`),
       // 最终钱
       contMoney: computed(() => {
         if (state.buyUserList.length) {
@@ -160,7 +174,17 @@ export default {
       isShowAddNew: false,
       changeNewShow: flag => {
         if (flag === 1 && !isNaN(state.userSelNum)) {
-          state.buyUserList.push(state.userList[state.userSelNum])
+          if (state.buyUserList.forEach(ele => {
+            if (ele.zNum === state.userList[state.userSelNum].zNum) {
+              return false
+            } else {
+              return true
+            }
+          }) || !state.buyUserList.length) {
+            state.buyUserList.push(state.userList[state.userSelNum])
+          } else {
+            state.showMsg('请勿重复添加')
+          }
         }
         state.isShowAddNew = !state.isShowAddNew
       },
@@ -173,7 +197,7 @@ export default {
       // 获得添加用户信息
       getPInfo: info => {
         let zNum = info.zNum
-        info.zNum = zNum.substr(0,1) + '*******' + zNum.substr(zNum.length - 1)
+        info.nowzNum = zNum.substr(0,1) + '*******' + zNum.substr(zNum.length - 1)
 
         state.userList.push(info)
         state.changeShow()
@@ -360,6 +384,27 @@ export default {
           width: 13px;
         }
       }
+    }
+  }
+
+  // 汽车
+  .car-sec {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #333;
+
+    .time-box {
+      margin-bottom: 10px;
+    }
+    .now-time {
+      font-size: 15px;
+      font-weight: 700;
+      margin-right: 10px;
     }
   }
 
