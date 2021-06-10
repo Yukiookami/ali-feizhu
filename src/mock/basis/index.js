@@ -334,8 +334,14 @@ const getTickInfo = req => {
   }
 }
 
+// 接收埋点
+const buriedPoint = req => {
+  return req
+} 
+
 Mock.mock('/mock/news', produceNewsData)
 Mock.mock('/mock/cityList', getCityList)
 Mock.mock('/mock/portList', getPort)
 Mock.mock('/mock/getTick', getTick)
 Mock.mock('/mock/getTickInfo', getTickInfo)
+Mock.mock('/mock/buriedPoint', buriedPoint)

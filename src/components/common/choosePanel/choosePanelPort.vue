@@ -141,6 +141,16 @@ export default {
       chooseCity: cityName => {
         store.commit('setDepPort', cityName.protLineDep)
         store.commit('setTargetPort', cityName.portLineTar)
+        // 港口选择埋点
+        buriedPoint({
+          eventId: 'chooseCity',
+          city: cityName.protLineDep
+        })
+
+        buriedPoint({
+          eventId: 'chooseCity',
+          city: cityName.portLineTar
+        })
         state.closePanel()
       },
       /**

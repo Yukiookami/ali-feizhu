@@ -49,6 +49,7 @@
 <script>
 import { onBeforeUpdate, reactive, ref, toRefs, watch } from 'vue'
 import store from '../../../store'
+import { buriedPoint } from '../../../assets/js/common'
 
 export default {
   // 城市数组，显示模式
@@ -121,6 +122,11 @@ export default {
        */
       chooseCity: cityName => {
         store.commit(props.saveValue, cityName)
+        // 城市选择埋点
+        buriedPoint({
+          eventId: 'chooseCity',
+          city: cityName
+        })
         state.closePanel()
       },
       /**

@@ -105,7 +105,7 @@
               <span class="senbo">¥</span>{{item.money}}
             </span>
 
-            <router-link class="lon-button" to="/pay">
+            <router-link class="lon-button" to="/pay" @click.prevent="goTo">
               立即预定
             </router-link>
           </div>
@@ -127,7 +127,7 @@
             <span class="senbo">¥</span>{{item.money}}
           </span>
 
-          <router-link class="buy" to="/pay">
+          <router-link class="buy" to="/pay" @click.prevent="goTo">
             立即预定
           </router-link>
         </div>
@@ -142,6 +142,8 @@ import { useRoute } from 'vue-router'
 import base64 from '../assets/js/base64'
 import fChooseTime from '../components/common/f-choose-time'
 import store from '@/store'
+import router from '../router'
+import { buriedPoint } from '../assets/js/common'
 
 export default {
   props: [],
@@ -172,6 +174,18 @@ export default {
         state.info = info
         store.commit('setTickMode', nowT)
         store.commit('setTickInfo', info)
+      },
+      // 跳转购票界面
+      goTo: () => {
+        // 购票埋点
+        buriedPoint({
+          eventId: 'buyTick',
+          buyTickId: state.info.id
+        })
+
+        router.push({
+          path: '/pay'
+        })
       }
     })
 

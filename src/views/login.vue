@@ -20,6 +20,7 @@
 import { getCurrentInstance, reactive, toRefs } from 'vue'
 import fMassage from '../components/common/f-massage'
 import router from '../router'
+import { buriedPoint } from '../assets/js/common'
 
 export default {
   setup () {
@@ -46,6 +47,33 @@ export default {
           setTimeout(() => {
             state.showMidZ = false
           }, 800)
+        }
+
+        // 登录埋点
+        if (!ctx.$cookie.getCookie("uv_cookies")) {
+          let nowDate = new Date()
+          let year = nowDate.getFullYear()
+          let mon = nowDate.getMonth() + 1
+          let day = nowDate.getDate()
+          // let time = nowDate.getTime()
+          let uvCookies = `${mon}${day}${state.username}`
+
+          let setTime = new Date(year, mon, day)
+          // let endTime = setTime.getTime()
+
+          // let timeX = endTime - time
+          // let hour = parseInt(timeX / (60 * 60 * 1000) % 24)
+          // let min = parseInt(timeX / (60 * 1000) % 60)
+          // let sec = parseInt(timeX / 1000 % 60)
+
+          ctx.$cookie.setCookie("uv_cookies", uvCookies, setTime)
+
+          console.log(ctx.$cookie.getCookie("uv_cookies"))
+
+          buriedPoint({
+            eventId: 'login',
+            userId: state.username
+          })
         }
       },
       // 是否显示
@@ -85,6 +113,7 @@ export default {
     margin-top: 40px;
     font-size: 16px;
     border: none;
+    outline: none;
   }
 
   .input-box {

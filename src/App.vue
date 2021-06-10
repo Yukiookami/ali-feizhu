@@ -3,12 +3,26 @@
 </template>
 
 <script>
-import Router from './router'
+import { reactive, toRefs } from '@vue/reactivity'
+import { buriedPoint } from './assets/js/common'
 
 export default {
   setup () {
+    // PV埋点
+    const state = reactive({
+      sendPv: () => {
+        buriedPoint({
+          eventId: 'loadPage',
+          page: 'app'
+        })
+      }
+    })
 
-    return {}
+    state.sendPv()
+
+    return {
+      ...toRefs(state)      
+    }
   }
 }
 </script>

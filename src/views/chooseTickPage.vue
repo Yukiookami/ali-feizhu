@@ -117,6 +117,7 @@ import tickHeader from '../components/tickPage/tickHeader'
 import { useRoute } from 'vue-router'
 import router from '../router'
 import base64 from '../assets/js/base64'
+import { buriedPoint } from '../assets/js/common'
 
 export default {
   setup () {
@@ -146,6 +147,12 @@ export default {
       },
       // 跳转页面
       goToBuy: (item, nowT) => {
+        // 选票埋点
+        buriedPoint({
+          eventId: 'chooseTick',
+          tickId: item.id
+        })
+
         router.push({
           path: '/buyTick',
           query: {
