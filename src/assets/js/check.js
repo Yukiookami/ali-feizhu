@@ -1,3 +1,9 @@
+/*
+ * @Author: zxy
+ * @Date: 2021-06-09 08:18:39
+ * @LastEditTime: 2021-06-18 16:36:25
+ * @FilePath: /feizhu/src/assets/js/check.js
+ */
 
 // 校验身份证号码
 const testId = (id) => {
@@ -44,6 +50,11 @@ const testId = (id) => {
   }
 }
 
+/**
+ * @description: 验证手机号
+ * @param {*} phone
+ * @return {*}
+ */
 const testPhone = phone => {
   if(!(/^1[3456789]\d{9}$/.test(phone))){ 
     return {
@@ -58,7 +69,36 @@ const testPhone = phone => {
   }
 }
 
+/**
+ * @description: 判断名字是否为汉字并且在2-8位之间
+ * @param {string} name
+ * @param {number} min
+ * @param {number} max
+ * @return {object}
+ */
+const testName = (name, min, max) => {
+  if (name.length >= min && name.length <= max) {
+    if (/^[\u4e00-\u9fa5]+$/.test(name)) {
+      return {
+        'status': 1,
+        'msg': ''
+      }  
+    } else {
+      return {
+        'status': 0,
+        'msg': '名称必须全为中文'
+      }  
+    }
+  } else {
+    return {
+      'status': 0,
+      'msg': '名字长度应在2-8位'
+    }  
+  }
+}
+
 export {
   testId,
-  testPhone
+  testPhone,
+  testName
 }

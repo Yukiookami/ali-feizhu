@@ -50,7 +50,7 @@
 <script>
 import { reactive, toRefs } from 'vue'
 import selPanel from './selPanel.vue'
-import  { testPhone, testId } from '../../assets/js/check'
+import  { testPhone, testId, testName } from '../../assets/js/check'
 import fMassage from '../common/f-massage.vue'
 
 export default {
@@ -141,20 +141,24 @@ export default {
 
         if (!checkFlag) {
           let res = {}
-          if (pInfo.type === '身份证') {
+          if (pInfo.zType === '身份证') {
             res = testId(pInfo.zNum)
           } else {
             res.status = 1
           }
-          let resPhone =testPhone(pInfo.phone)
+
+          let resPhone = testPhone(pInfo.phone)
+          let resName = testName(pInfo.name, 2, 8)
           
-          if (res.status && resPhone.status) {
+          if (res.status && resPhone.status && resName.status) {
             idFlag = false
           } else {
             if (!res.status) {
               state.showMsg(res.msg)
             } else if (!resPhone.status) {
               state.showMsg(resPhone.msg)
+            } else if (!resName.status) {
+              state.showMsg(resName.msg)
             }
           }
         } else {

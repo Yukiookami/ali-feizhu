@@ -1,3 +1,9 @@
+<!--
+ * @Author: zxy
+ * @Date: 2021-05-26 15:35:25
+ * @LastEditTime: 2021-06-18 16:36:03
+ * @FilePath: /feizhu/src/components/common/f-massage.vue
+-->
 <template>
   <transition name="msg">
     <div class="msg-box" v-if="showMidZ">
@@ -23,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .msg-box {
-  $text-w: 100px;
+  $text-w: 140px;
 
   position: fixed;
   top: calc(50% - 50px);

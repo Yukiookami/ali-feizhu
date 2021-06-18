@@ -91,7 +91,7 @@ export default {
       // 城市数组
       finCityList: [],
       /**
-       * 处理城市数组
+       * 处理城市数组，分组
        * 
        * @param {array} oldData
        * 

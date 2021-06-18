@@ -1,3 +1,9 @@
+/*
+ * @Author: zxy
+ * @Date: 2021-05-26 14:03:33
+ * @LastEditTime: 2021-06-18 17:55:30
+ * @FilePath: /feizhu/src/router/index.js
+ */
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 
@@ -42,6 +48,22 @@ const routes = [
     path: '/pay',
     name: 'pay',
     component: () => import('../views/payTickPage.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/aliPayPage',
+    name: 'aliPay',
+    component: () => import('../views/aliPay.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/aliPaySuccess',
+    name: 'aliPaySuccess',
+    component: () => import('../views/aliPaySuccess.vue'),
     meta: {
       requiresAuth: true
     }

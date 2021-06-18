@@ -143,6 +143,10 @@
     </footer>
   </div>
   <f-massage :msg="msg" :showMidZ="showMidZ"></f-massage>
+
+  <!-- 加载面板 -->
+  <load-to :show="showLoad" :info="info" :userInfo="userList"
+  @loadOver="loadOver"></load-to>
 </template>
 
 <script>
@@ -152,6 +156,8 @@ import store from '../store'
 import  { testPhone } from '../assets/js/check'
 import fMassage from '../components/common/f-massage.vue'
 import addPerson from '../components/tickPage/addPerson.vue'
+import loadTo from '../components/tickPage/loadTo.vue'
+import router from '../router'
 
 export default {
   setup () {
@@ -220,10 +226,27 @@ export default {
       // 支付
       pay: () => {
         if (testPhone(state.phone).status && state.buyUserList.length) {
-          state.showMsg('支付成功')
+          state.startLoad()
         } else {
           state.showMsg('请正确填写')
         }
+      },
+      // 是否显示加载面板
+      showLoad: false,
+      // 显示加载
+      startLoad: () => {
+        state.showLoad = true
+      },
+      // 加载结束
+      loadOver: () => {
+        state.showLoad = false
+
+        router.push({
+          path: `/aliPayPage`,
+          query: {
+            money: state.contMoney
+          }
+        })
       },
       // 是否显示消息
       showMidZ: false,
@@ -246,7 +269,8 @@ export default {
   components: { 
     fChooseTime,
     addPerson,
-    fMassage
+    fMassage,
+    loadTo
   }
 }
 </script>
