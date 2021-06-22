@@ -1,13 +1,14 @@
 /*
  * @Author: zxy
  * @Date: 2021-05-26 14:03:33
- * @LastEditTime: 2021-06-18 17:55:30
+ * @LastEditTime: 2021-06-22 20:53:46
  * @FilePath: /feizhu/src/router/index.js
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import activityRoutes from './activity'
 
-const routes = [
+let routes = [
   {
     path: '/',
     name: 'Home',
@@ -69,6 +70,8 @@ const routes = [
     }
   }
 ]
+
+routes = routes.concat(activityRoutes)
 
 const router = createRouter({
   history: createWebHashHistory(),

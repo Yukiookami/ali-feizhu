@@ -1,3 +1,9 @@
+/*
+ * @Author: zxy
+ * @Date: 2021-05-26 14:03:33
+ * @LastEditTime: 2021-06-22 20:45:19
+ * @FilePath: /feizhu/src/main.js
+ */
 import { createApp } from 'vue'
 import App from './App.vue'
 // axios
