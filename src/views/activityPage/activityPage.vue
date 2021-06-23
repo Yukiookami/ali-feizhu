@@ -1,17 +1,18 @@
 <!--
  * @Author: zxy
  * @Date: 2021-06-22 20:15:27
- * @LastEditTime: 2021-06-22 20:52:51
+ * @LastEditTime: 2021-06-23 23:03:18
  * @FilePath: /feizhu/src/views/activityPage/activityPage.vue
 -->
 <template>
   <div>
-    123213
+    <airport></airport>
   </div>
 </template>
 
 <script>
 import { reactive, toRefs } from 'vue'
+import airport from '../../components/activity/AirportPickUp/ariport.vue'
 
 export default {
   setup () {
@@ -22,6 +23,9 @@ export default {
     return {
       ...toRefs(state),
     }
+  },
+  components: {
+    airport
   }
 }
 </script>

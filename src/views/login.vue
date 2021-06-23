@@ -21,10 +21,12 @@ import { getCurrentInstance, reactive, toRefs } from 'vue'
 import fMassage from '../components/common/f-massage'
 import router from '../router'
 import { buriedPoint } from '../assets/js/common'
+import { useRoute } from 'vue-router'
 
 export default {
   setup () {
     const { ctx } = getCurrentInstance()
+    const route = useRoute()
 
     const state = reactive({
       username: '',
@@ -37,8 +39,16 @@ export default {
       login: () => {
         if (state.username === 'admin' && state.password === '123') {
           ctx.$cookie.setCookie("login_cookies", state.username, 60 * 60 * 24)
+          const id = route.params.id
 
-          router.push('/pay')
+          if (id) {
+            router.push({
+              path: '/airportPay',
+              params: id
+            })
+          } else {
+            router.push('/pay')
+          }
         } else {
           state.msg = '请输入正确用户名密码'
           state.showMidZ = true
