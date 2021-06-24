@@ -55,13 +55,13 @@ export default {
           title: '飞猪租车',
           content: '信用免押',
           cover: require('../assets/img/homePage/car.png'),
-          router: 'https://market.m.taobao.com/app/trip/h5-vehicle-new/pages/home/index.html?vehicleType=rent-car&program_type=H5&ttid=201300%40travel_h5_3.1.0&spm=181.7406756.10840052.nav0&scm=&_preProjVer=1.25.0&_projVer=1.5.4'
+          router: '/ariport'
         },
         {
           title: '接送站',
           content: '提前约接机',
           cover: require('../assets/img/homePage/yoyaku.png'),
-          router: 'https://market.m.taobao.com/app/trip/h5-vehicle-new/pages/home/index.html?vehicleType=train-transfer&program_type=H5&ttid=201300%40travel_h5_3.1.0&spm=181.7406756.10840052.nav1&scm=&_preProjVer=1.25.0&_projVer=1.5.4'
+          router: '/ariport'
         }
       ]
     })

@@ -1,7 +1,7 @@
 <!--
  * @Author: zxy
  * @Date: 2021-06-23 23:07:39
- * @LastEditTime: 2021-06-23 23:27:31
+ * @LastEditTime: 2021-06-23 23:57:10
  * @FilePath: /feizhu/src/components/activity/AirportPickUp/com/tick.vue
 -->
 <template>
@@ -55,7 +55,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 5px;
+    padding: 8px 3px;
+    margin-bottom: 6px;
 
     .left-part {
       display: flex;
@@ -88,7 +89,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 4px;
   }
 }
 </style>

@@ -39,12 +39,12 @@ export default {
       login: () => {
         if (state.username === 'admin' && state.password === '123') {
           ctx.$cookie.setCookie("login_cookies", state.username, 60 * 60 * 24)
-          const id = route.params.id
+          const id = route.query.id
 
           if (id) {
             router.push({
               path: '/airportPay',
-              params: id
+              query: id
             })
           } else {
             router.push('/pay')

@@ -1,8 +1,14 @@
+<!--
+ * @Author: zxy
+ * @Date: 2021-05-26 15:51:17
+ * @LastEditTime: 2021-06-24 15:54:49
+ * @FilePath: /feizhu/src/components/homePage/f-adv-button.vue
+-->
 <template>
-  <a class="f-adv-button-main" :href="router" :style="{backgroundImage: `url(${cover})`}">
+  <router-link class="f-adv-button-main" :to="router" :style="{backgroundImage: `url(${cover})`}">
     <span>{{title}}</span>
     <span class="content-box">{{content}}</span>
-  </a>
+  </router-link>
 </template>
 
 <script>

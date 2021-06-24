@@ -339,9 +339,88 @@ const buriedPoint = req => {
   return req
 } 
 
+// 返回活动数组
+const getAirportList = req => [
+  {
+    id: 4,
+    content: '上海:接送',
+    type: '爆款推荐',
+    cover: require('../../assets/activity/airport/jzh1.webp'),
+    money: '50',
+    title: '上海接机送机服务上海浦东虹桥机场接送机服务接送站车型齐全',
+    ps: '一对一私人管家服务',
+    selled: '316'
+  },
+  {
+    id: 5,
+    content: '上海:接送',
+    type: '爆款推荐',
+    cover: require('../../assets/activity/airport/jzh2.webp'),
+    money: '140',
+    title: '【直拍有效】上海浦东国际机场接机送机服务到杭州接送机中巴大巴',
+    selled: '22'
+  },
+  {
+    id: 6,
+    content: '北京:接送',
+    type: '爆款推荐',
+    cover: require('../../assets/activity/airport/jjj1.webp'),
+    money: '40',
+    title: '北京机场接机 北京机场送机  北京首都机场 大兴机场接送机服务',
+    selled: '777'
+  },
+  {
+    id: 7,
+    content: '北京:接送',
+    type: '爆款推荐',
+    cover: require('../../assets/activity/airport/jjj2.webp'),
+    money: '50',
+    title: '北京接机服务首都机场接机送机火车站北京大兴机场接送机5-55座',
+    selled: '343'
+  },
+  {
+    id: 0,
+    content: '上海:接送',
+    type: '江浙沪',
+    cover: require('../../assets/activity/airport/jzh1.webp'),
+    money: '50',
+    title: '上海接机送机服务上海浦东虹桥机场接送机服务接送站车型齐全',
+    ps: '一对一私人管家服务',
+    selled: '316'
+  },
+  {
+    id: 1,
+    content: '上海:接送',
+    type: '江浙沪',
+    cover: require('../../assets/activity/airport/jzh2.webp'),
+    money: '140',
+    title: '【直拍有效】上海浦东国际机场接机送机服务到杭州接送机中巴大巴',
+    selled: '22'
+  },
+  {
+    id: 2,
+    content: '北京:接送',
+    type: '京津冀',
+    cover: require('../../assets/activity/airport/jjj1.webp'),
+    money: '40',
+    title: '北京机场接机 北京机场送机  北京首都机场 大兴机场接送机服务',
+    selled: '777'
+  },
+  {
+    id: 3,
+    content: '北京:接送',
+    type: '京津冀',
+    cover: require('../../assets/activity/airport/jjj2.webp'),
+    money: '50',
+    title: '北京接机服务首都机场接机送机火车站北京大兴机场接送机5-55座',
+    selled: '343'
+  }
+]
+
 Mock.mock('/mock/news', produceNewsData)
 Mock.mock('/mock/cityList', getCityList)
 Mock.mock('/mock/portList', getPort)
 Mock.mock('/mock/getTick', getTick)
 Mock.mock('/mock/getTickInfo', getTickInfo)
 Mock.mock('/mock/buriedPoint', buriedPoint)
+Mock.mock('/mock/getAirportList', getAirportList)

@@ -1,7 +1,7 @@
 /*
  * @Author: zxy
  * @Date: 2021-06-22 20:23:11
- * @LastEditTime: 2021-06-23 18:08:34
+ * @LastEditTime: 2021-06-24 18:51:48
  * @FilePath: /feizhu/src/router/activity.js
  */
 export default [
