@@ -41,10 +41,12 @@ export default {
           ctx.$cookie.setCookie("login_cookies", state.username, 60 * 60 * 24)
           const id = route.query.id
 
-          if (id) {
+          if (id || id === 0) {
             router.push({
               path: '/airportPay',
-              query: id
+              query: {
+                id
+              }
             })
           } else {
             router.push('/pay')

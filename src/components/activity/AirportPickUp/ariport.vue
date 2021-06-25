@@ -1,7 +1,7 @@
 <!--
  * @Author: zxy
  * @Date: 2021-06-22 20:15:07
- * @LastEditTime: 2021-06-24 18:49:24
+ * @LastEditTime: 2021-06-25 19:29:05
  * @FilePath: /feizhu/src/components/activity/AirportPickUp/ariport.vue
 -->
 <template>
@@ -195,7 +195,8 @@ export default {
   color: #fff;
   background-color: rgba(0, 0, 0, 0);  
   border: none;
-
+  z-index: 2000;
+  
   img {
     width: 100%;
   }

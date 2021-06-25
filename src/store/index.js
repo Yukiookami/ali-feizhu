@@ -1,3 +1,9 @@
+/*
+ * @Author: zxy
+ * @Date: 2021-05-26 14:03:33
+ * @LastEditTime: 2021-06-25 19:30:50
+ * @FilePath: /feizhu/src/store/index.js
+ */
 import { createStore } from 'vuex'
 
 export default createStore({
@@ -21,7 +27,9 @@ export default createStore({
     // 购票mode
     tickMode: '',
     // 票据信息
-    tickInfo: ''
+    tickInfo: '',
+    // 活动id
+    airId: ''
   },
   mutations: {
     // 添加条件
@@ -68,6 +76,10 @@ export default createStore({
     // 设置票据信息
     setTickInfo (state, info) {
       state.tickInfo = info
+    },
+    // 设置活动id
+    setAirId (state, airId) {
+      state.airId = airId
     }
   },
   actions: {

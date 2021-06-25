@@ -1,7 +1,7 @@
 /*
  * @Author: zxy
  * @Date: 2021-05-26 14:03:33
- * @LastEditTime: 2021-06-24 18:57:23
+ * @LastEditTime: 2021-06-25 19:41:52
  * @FilePath: /feizhu/src/main.js
  */
 import { createApp } from 'vue'
@@ -34,9 +34,9 @@ router.beforeEach((to, from, next) => {
   if(to.meta.requiresAuth) {
     // 判断是否有cookie
     if(VueCookieNext.getCookie("login_cookies")) {
-      if (store.state.tickMode || store.state.tickMode === 0)  {
+      if (store.state.tickMode || store.state.tickMode === 0 || store.state.airId || store.state.airId === 0)  {
         next()
-      } else if (to.query.id) {
+      } else if (to.query.id || to.query.id === 0) {
         next()
       } 
       else {
